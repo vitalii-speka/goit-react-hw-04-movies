@@ -4,12 +4,15 @@ import HomeView from "./views/HomeView";
 import AuthorsView from "./views/AuthorsView";
 import BooksView from "./views/BooksView";
 import NotFoundView from "./views/NotFaundView";
+import BooksDetalisView from "./views/BooksDetalisView";
 
 const App = () => (
   <>
     <ul>
       <li>
-        <Link to="/">Home</Link>
+        <Link exact to="/">
+          Home
+        </Link>
       </li>
       <li>
         <Link to="/authors">Authors</Link>
@@ -22,7 +25,8 @@ const App = () => (
     <Switch>
       <Route exact path="/" component={HomeView} />
       <Route path="/authors" component={AuthorsView} />
-      <Route path="/books" component={BooksView} />
+      <Route exact path="/books" component={BooksView} />
+      <Route path="/books/:bookId" component={BooksDetalisView} />
       <Route component={NotFoundView} />
     </Switch>
   </>
