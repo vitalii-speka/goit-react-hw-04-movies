@@ -16,30 +16,20 @@ export class MoviesDetalisView extends Component {
 
   async componentDidMount() {
     const { movieId } = this.props.match.params;
-    // console.log(movieId);
 
     const response = await Axios.get(
       `https://api.themoviedb.org/3/movie/${movieId}?api_key=66851c2d78ce86a1843cb2ac55e2da92&language=en-US`
     );
-    // console.log(response.data);
 
     this.setState({ ...response.data });
-    // console.log(`this.state`, this.state);
   }
 
   handleGoBack = () => {
     const { location, history } = this.props;
 
-    // метод 2020
     history.push(location?.state?.from || routes.home);
-
-    //старый метод
-    // if (location.state && location.state.from) {
-    //   return history.push(location.state.from);
-    // }
-
-    // history.push(routes.books);
   };
+
   getYear = () => {
     const date = this.state.release_date.getFullYear();
     console.log(date);
@@ -55,7 +45,6 @@ export class MoviesDetalisView extends Component {
       genres,
       release_date,
     } = this.state;
-    // console.log(this.state);
 
     return (
       <>
@@ -78,9 +67,7 @@ export class MoviesDetalisView extends Component {
             />
           )}
 
-          {/* {release_date && <h2>{`${release_date.getFullYear()}`}</h2>} */}
           <h1>{`${title}(${release_date})`}</h1>
-          {/* <h1>{`${title}(${this.getYear()})`}</h1> */}
           <p>{`User score: ${popularity}% `}</p>
           <p>Overview {overview}</p>
           {genres && (

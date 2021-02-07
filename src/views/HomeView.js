@@ -18,7 +18,6 @@ export class HomeView extends Component {
   }
 
   render() {
-    console.log(this.state.trendingList);
     const { match } = this.props;
 
     return (

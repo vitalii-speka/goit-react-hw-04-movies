@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 import s from "./Searchbar.module.css";
 
@@ -19,7 +19,9 @@ class Searchbar extends Component {
     if (this.state.searchName === "") {
       return toast.info("please, enter your request");
     }
+
     this.props.onSubmit(this.state.searchName);
+
     this.setState({ searchName: "" });
   };
 
@@ -27,14 +29,9 @@ class Searchbar extends Component {
     return (
       <header onSubmit={this.handleSubmit} className={s.SearchBar}>
         <form className={s.SearchForm}>
-          <Link to={`/movie?query=${this.state.searchName}`}>
-            <button type="submit" className={s.SearchFormButton}>
-              <span className={s.SearchFormButtonLabel}>Search</span>
-            </button>
-          </Link>
-          {/* <button type="submit" className={s.SearchFormButton}>
+          <button type="submit" className={s.SearchFormButton}>
             <span className={s.SearchFormButtonLabel}>Search</span>
-          </button> */}
+          </button>
           <input
             className={s.SearchFormInput}
             type="text"

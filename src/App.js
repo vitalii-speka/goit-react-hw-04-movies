@@ -33,7 +33,7 @@ const MoviesDetalisView = lazy(() =>
 const NotFoundView = lazy(() =>
   import("./views/NotFaundView.js" /* webpackChunkName: "not-faund-view" */)
 );
-console.log(routes.movieDetalis);
+
 const App = () => (
   <>
     <AppBar />

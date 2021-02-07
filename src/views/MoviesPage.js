@@ -3,14 +3,23 @@ import Axios from "axios";
 
 import MovieDetailsPage from "../componets/MovieDetailsPage";
 import Searchbar from "../componets/Searchbar";
+import getQueryPatams from "../utils/getQueryPatams";
 
 export class MoviesPage extends Component {
   state = {
     movies: [],
-    searchName: "",
   };
 
   async componentDidMount() {
+    const { query } = getQueryPatams(this.props.location.search);
+
+    if (query) {
+      const response = await Axios.get(
+        `https://api.themoviedb.org/3/search/movie?api_key=66851c2d78ce86a1843cb2ac55e2da92&language=en-US&query=${query}&page=1&include_adult=false`
+      );
+
+      this.setState({ movies: response.data.results });
+    }
     // const response = await Axios.get(
     //   "https://api.themoviedb.org/3/search/movie?api_key=66851c2d78ce86a1843cb2ac55e2da92&language=en-US&query=Malcolm&page=1&include_adult=false"
     // );
@@ -19,35 +28,40 @@ export class MoviesPage extends Component {
   }
 
   async componentDidUpdate(prevProps, prevState) {
-    const prevSearchName = prevState.searchName;
-    const { searchName } = this.state;
+    const { query: prevQuery } = getQueryPatams(prevProps.location.search);
+    const { query: nextQuery } = getQueryPatams(this.props.location.search);
 
-    if (prevSearchName !== searchName) {
-      // await this.setState({ loading: true, photos: [], page: 1 });
+    if (prevQuery !== nextQuery) {
+      // await this.fetchMovies(nextQuery);
 
       const response = await Axios.get(
-        `https://api.themoviedb.org/3/search/movie?api_key=66851c2d78ce86a1843cb2ac55e2da92&language=en-US&query=${searchName}&page=1&include_adult=false`
+        `https://api.themoviedb.org/3/search/movie?api_key=66851c2d78ce86a1843cb2ac55e2da92&language=en-US&query=${nextQuery}&page=1&include_adult=false`
       );
-      console.log(response.data.results);
 
       this.setState({ movies: response.data.results });
-
-      // this.fetchProcessing(searchName);
     }
   }
+  // fetchMovies = (query) => {
+  //   const response = Axios.get(
+  //     `https://api.themoviedb.org/3/search/movie?api_key=66851c2d78ce86a1843cb2ac55e2da92&language=en-US&query=${query}&page=1&include_adult=false`
+  //   );
 
-  handleInputSubmit = (searchName) => {
-    this.setState({ searchName });
+  //   this.setState({ movies: response.data.results });
+  // };
+
+  handleChangeQuery = (query) => {
+    this.props.history.push({
+      // pathname: this.props.location.pathname,
+      ...this.props.location,
+      search: `query=${query}`,
+    });
+    console.log(query);
   };
 
   render() {
-    // const { match } = this.props;
-
-    // console.log(match.url);
     return (
       <>
-        <Searchbar onSubmit={this.handleInputSubmit} />
-        <h1>Movies Page</h1>
+        <Searchbar onSubmit={this.handleChangeQuery} />
         <MovieDetailsPage movies={this.state.movies} />
       </>
     );
