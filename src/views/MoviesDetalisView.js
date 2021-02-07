@@ -16,15 +16,15 @@ export class MoviesDetalisView extends Component {
 
   async componentDidMount() {
     const { movieId } = this.props.match.params;
-    console.log(movieId);
+    // console.log(movieId);
 
     const response = await Axios.get(
       `https://api.themoviedb.org/3/movie/${movieId}?api_key=66851c2d78ce86a1843cb2ac55e2da92&language=en-US`
     );
-    console.log(response.data);
+    // console.log(response.data);
 
     this.setState({ ...response.data });
-    console.log(`this.state`, this.state);
+    // console.log(`this.state`, this.state);
   }
 
   handleGoBack = () => {
@@ -42,8 +42,8 @@ export class MoviesDetalisView extends Component {
   };
   getYear = () => {
     const date = this.state.release_date.getFullYear();
-
-    return date;
+    console.log(date);
+    // return date;
   };
 
   render() {

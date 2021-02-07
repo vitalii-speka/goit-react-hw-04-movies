@@ -23,7 +23,7 @@ export class HomeView extends Component {
 
     return (
       <>
-        <h1>Trending today</h1>;
+        <h1>Trending today</h1>
         <ul>
           {this.state.trendingList.map(({ id, title }) => (
             <li key={id}>

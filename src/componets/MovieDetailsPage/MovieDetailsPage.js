@@ -3,8 +3,8 @@ import { Link, withRouter } from "react-router-dom";
 import "../../index.css";
 // import BookPreview from "../BookPreview/BookPreview";
 
-const MoviesPage = ({ movies, location }) => {
-  console.log(movies);
+const MovieDetailsPage = ({ movies, location }) => {
+  // console.log(movies);
   return (
     <>
       <ul>
@@ -25,4 +25,4 @@ const MoviesPage = ({ movies, location }) => {
   );
 };
 
-export default withRouter(MoviesPage);
+export default withRouter(MovieDetailsPage);

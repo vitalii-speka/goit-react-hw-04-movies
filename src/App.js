@@ -1,5 +1,8 @@
 import React, { lazy, Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 // import HomeView from "./views/HomeView";
 // import AuthorsView from "./views/AuthorsView";
 // import BooksView from "./views/BooksView";
@@ -14,8 +17,8 @@ const HomeView = lazy(() =>
 // const AuthorsView = lazy(() =>
 //   import("./views/AuthorsView.js" /* webpackChunkName: "authors-view" */)
 // );
-const MoviesSearchView = lazy(() =>
-  import("./views/MoviesSearchView.js" /* webpackChunkName: "movie-view" */)
+const MoviesPage = lazy(() =>
+  import("./views/MoviesPage.js" /* webpackChunkName: "movie-view" */)
 );
 // const BooksDetalisView = lazy(() =>
 //   import(
@@ -39,12 +42,24 @@ const App = () => (
         <Route exact path={routes.home} component={HomeView} />
         {/* <Route path={routes.authors} co/>mponent={AuthorsView} /> */}
         {/* <Route path={routes.books} component={BooksView} /> */}
-        <Route exact path={routes.movie} component={MoviesSearchView} />
+        <Route exact path={routes.movie} component={MoviesPage} />
+        <Route exact path={routes.moviesSearch} component={MoviesPage} />
         <Route exact path={routes.movieDetalis} component={MoviesDetalisView} />
         {/* <Route path={routes.bookDetalis} component={BooksDetalisView} /> */}
-        <Route component={NotFoundView} />
+        <Route exact component={NotFoundView} />
       </Switch>
     </Suspense>
+    <ToastContainer
+      position="top-center"
+      autoClose={3000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+    />
   </>
 );
 
