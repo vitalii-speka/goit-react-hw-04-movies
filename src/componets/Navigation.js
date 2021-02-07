@@ -14,15 +14,8 @@ const Navigation = () => {
       >
         Home
       </NavLink>
-      <NavLink
-        to={routes.authors}
-        className="nav-link"
-        activeClassName="active"
-      >
-        Authors
-      </NavLink>
-      <NavLink to={routes.books} className="nav-link" activeClassName="active">
-        Books
+      <NavLink to={routes.movie} className="nav-link" activeClassName="active">
+        Movies
       </NavLink>
     </nav>
   );

@@ -11,30 +11,36 @@ import AppBar from "./componets/AppBar";
 const HomeView = lazy(() =>
   import("./views/HomeView.js" /* webpackChunkName: "home-view" */)
 );
-const AuthorsView = lazy(() =>
-  import("./views/AuthorsView.js" /* webpackChunkName: "authors-view" */)
-);
-const BooksView = lazy(() =>
-  import("./views/BooksView.js" /* webpackChunkName: "books-view" */)
-);
+// const AuthorsView = lazy(() =>
+//   import("./views/AuthorsView.js" /* webpackChunkName: "authors-view" */)
+// );
+// const BooksView = lazy(() =>
+//   import("./views/BooksView.js" /* webpackChunkName: "books-view" */)
+// );
 const BooksDetalisView = lazy(() =>
   import(
     "./views/BooksDetalisView.js" /* webpackChunkName: "books-details-view" */
   )
 );
+const MoviesDetalisView = lazy(() =>
+  import(
+    "./views/MoviesDetalisView.js" /* webpackChunkName: "movies-details-view" */
+  )
+);
 const NotFoundView = lazy(() =>
   import("./views/NotFaundView.js" /* webpackChunkName: "not-faund-view" */)
 );
-
+console.log(routes.movieDetalis);
 const App = () => (
   <>
     <AppBar />
     <Suspense fallback={<h1>Load....</h1>}>
       <Switch>
         <Route exact path={routes.home} component={HomeView} />
-        <Route path={routes.authors} component={AuthorsView} />
-        <Route exact path={routes.books} component={BooksView} />
-        <Route exact path={routes.bookDetalis} component={BooksDetalisView} />
+        {/* <Route path={routes.authors} co/>mponent={AuthorsView} /> */}
+        {/* <Route path={routes.books} component={BooksView} /> */}
+        <Route path={routes.movieDetalis} component={MoviesDetalisView} />
+        <Route path={routes.bookDetalis} component={BooksDetalisView} />
         <Route component={NotFoundView} />
       </Switch>
     </Suspense>

@@ -10,12 +10,20 @@ export class AuthorsView extends Component {
   };
 
   async componentDidMount() {
+    // const response = await Axios.get(
+    //   // " http://localhost:4040/authors?_embed=books"
+    //   "https://api.themoviedb.org/3/movie/550?api_key=66851c2d78ce86a1843cb2ac55e2da92"
+    // );
     const response = await Axios.get(
-      " http://localhost:4040/authors?_embed=books"
+      // " http://localhost:4040/authors?_embed=books"
+      `https://api.themoviedb.org/3/movie/550?api_key=66851c2d78ce86a1843cb2ac55e2da92&language=en-US`
     );
-    // console.log(response.data);
+    //api.themoviedb.org/3/trending/all/day?api_key=<<api_key>>
 
-    this.setState({ authors: response.data });
+    console.log(response);
+    console.log(response.data);
+
+    // this.setState({ authors: response.data });
   }
 
   render() {
