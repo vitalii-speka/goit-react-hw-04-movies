@@ -14,14 +14,14 @@ const HomeView = lazy(() =>
 // const AuthorsView = lazy(() =>
 //   import("./views/AuthorsView.js" /* webpackChunkName: "authors-view" */)
 // );
-// const BooksView = lazy(() =>
-//   import("./views/BooksView.js" /* webpackChunkName: "books-view" */)
-// );
-const BooksDetalisView = lazy(() =>
-  import(
-    "./views/BooksDetalisView.js" /* webpackChunkName: "books-details-view" */
-  )
+const MoviesSearchView = lazy(() =>
+  import("./views/MoviesSearchView.js" /* webpackChunkName: "movie-view" */)
 );
+// const BooksDetalisView = lazy(() =>
+//   import(
+//     "./views/BooksDetalisView.js" /* webpackChunkName: "books-details-view" */
+//   )
+// );
 const MoviesDetalisView = lazy(() =>
   import(
     "./views/MoviesDetalisView.js" /* webpackChunkName: "movies-details-view" */
@@ -39,8 +39,9 @@ const App = () => (
         <Route exact path={routes.home} component={HomeView} />
         {/* <Route path={routes.authors} co/>mponent={AuthorsView} /> */}
         {/* <Route path={routes.books} component={BooksView} /> */}
-        <Route path={routes.movieDetalis} component={MoviesDetalisView} />
-        <Route path={routes.bookDetalis} component={BooksDetalisView} />
+        <Route exact path={routes.movie} component={MoviesSearchView} />
+        <Route exact path={routes.movieDetalis} component={MoviesDetalisView} />
+        {/* <Route path={routes.bookDetalis} component={BooksDetalisView} /> */}
         <Route component={NotFoundView} />
       </Switch>
     </Suspense>

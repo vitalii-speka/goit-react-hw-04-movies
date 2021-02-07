@@ -4,7 +4,7 @@ import routes from "../routes";
 
 export class MoviesDetalisView extends Component {
   state = {
-    releaseDate: null,
+    release_date: null,
     id: null,
     imgUrl: null,
     title: null,
@@ -15,11 +15,11 @@ export class MoviesDetalisView extends Component {
   };
 
   async componentDidMount() {
-    // const { bookId } = this.props.match.params;
+    const { movieId } = this.props.match.params;
+    console.log(movieId);
 
-    // const response = await Axios.get(`http://localhost:4040/books/${bookId}`);
     const response = await Axios.get(
-      `https://api.themoviedb.org/3/movie/550?api_key=66851c2d78ce86a1843cb2ac55e2da92&language=en-US`
+      `https://api.themoviedb.org/3/movie/${movieId}?api_key=66851c2d78ce86a1843cb2ac55e2da92&language=en-US`
     );
     console.log(response.data);
 
@@ -31,7 +31,7 @@ export class MoviesDetalisView extends Component {
     const { location, history } = this.props;
 
     // метод 2020
-    history.push(location?.state?.from || routes.books);
+    history.push(location?.state?.from || routes.home);
 
     //старый метод
     // if (location.state && location.state.from) {
@@ -39,6 +39,11 @@ export class MoviesDetalisView extends Component {
     // }
 
     // history.push(routes.books);
+  };
+  getYear = () => {
+    const date = this.state.release_date.getFullYear();
+
+    return date;
   };
 
   render() {
@@ -51,23 +56,31 @@ export class MoviesDetalisView extends Component {
       release_date,
     } = this.state;
     // console.log(this.state);
-    const sliceDate = release_date.slice(0, 4);
-    console.log(sliceDate);
+
     return (
       <>
         <div className="container-fluid">
           <button type="button" onClick={this.handleGoBack}>
             Вернуться назад
           </button>
-          {/* <h1>Page one movie {this.props.match.params.bookId}</h1> */}
-          {/* <h1>Page one movie </h1> */}
-          <img
-            src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
-            alt={title}
-            width={300}
-          />
+          {poster_path ? (
+            <img
+              src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
+              alt={title}
+              width={320}
+              height={240}
+            />
+          ) : (
+            <img
+              src={`http://dummyimage.com/320x240/99cccc/ffffff.gif&text=sorry, the poster is missing`}
+              alt={title}
+              width={320}
+            />
+          )}
+
+          {/* {release_date && <h2>{`${release_date.getFullYear()}`}</h2>} */}
           <h1>{`${title}(${release_date})`}</h1>
-          {/* <h2> {`${title}(${releaseDate.slice(0, 4)})`}</h2> */}
+          {/* <h1>{`${title}(${this.getYear()})`}</h1> */}
           <p>{`User score: ${popularity}% `}</p>
           <p>Overview {overview}</p>
           {genres && (
