@@ -20,11 +20,6 @@ export class MoviesPage extends Component {
 
       this.setState({ movies: response.data.results });
     }
-    // const response = await Axios.get(
-    //   "https://api.themoviedb.org/3/search/movie?api_key=66851c2d78ce86a1843cb2ac55e2da92&language=en-US&query=Malcolm&page=1&include_adult=false"
-    // );
-    // console.log(response.data.results);
-    // this.setState({ movies: response.data.results });
   }
 
   async componentDidUpdate(prevProps, prevState) {
@@ -63,6 +58,27 @@ export class MoviesPage extends Component {
       <>
         <Searchbar onSubmit={this.handleChangeQuery} />
         <MovieDetailsPage movies={this.state.movies} />
+
+        {this.state.movies.length > 0 && (
+          <Route
+            path={`${match.path}/:movieId/cast`}
+            render={(props) => {
+              const movieId = Number(props.match.params.authorId);
+              const movie = this.state.movies.find(
+                (author) => author.id === movieId
+              );
+              // console.log(author.books);
+              return (
+                movie && (
+                  <>
+                    <h2>Книги автора: </h2>
+                    {/* <BookList {...props} books={author.books} /> */}
+                  </>
+                )
+              );
+            }}
+          />
+        )}
       </>
     );
   }
