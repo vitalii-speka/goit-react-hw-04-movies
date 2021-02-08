@@ -1,8 +1,17 @@
-import React, { Component } from "react";
+import React, { Component, lazy, Suspense } from "react";
+import { Route } from "react-router-dom";
 import Axios from "axios";
 import routes from "../routes";
+import { NavLink } from "react-router-dom";
 
-export class MoviesDetalisView extends Component {
+const Cast = lazy(() =>
+  import("./Cast/Cast.js" /* webpackChunkName: "cast-view" */)
+);
+const Reviews = lazy(() =>
+  import("./Reviews/Reviews.js" /* webpackChunkName: "reviews-view" */)
+);
+
+export class MovieDetailsPage extends Component {
   state = {
     release_date: null,
     id: null,
@@ -30,12 +39,6 @@ export class MoviesDetalisView extends Component {
     history.push(location?.state?.from || routes.home);
   };
 
-  getYear = () => {
-    const date = this.state.release_date.getFullYear();
-    console.log(date);
-    // return date;
-  };
-
   render() {
     const {
       title,
@@ -50,7 +53,7 @@ export class MoviesDetalisView extends Component {
       <>
         <div className="container-fluid">
           <button type="button" onClick={this.handleGoBack}>
-            Вернуться назад
+            Go back
           </button>
           {poster_path ? (
             <img
@@ -78,11 +81,42 @@ export class MoviesDetalisView extends Component {
               ))}
             </p>
           )}
-          <p>Audition information: </p>
         </div>
+        <hr />
+        <h2>Audition information:</h2>
+
+        <ul>
+          <li>
+            <NavLink
+              exact
+              // to={`/movie/:movieId/cast`}
+              to={{
+                pathname: `${this.props.match.url}/cast`,
+                state: { from: this.props.location },
+              }}
+            >
+              Cast
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={{
+                pathname: `${this.props.match.url}/reviews`,
+                state: { from: this.props.location },
+              }}
+            >
+              Reviews
+            </NavLink>
+          </li>
+        </ul>
+        {/* <Link to={`${match.url}movie/${id}/cast`}>Cast</Link> */}
+        <Suspense fallback={<h1>Load....</h1>}>
+          <Route path={routes.cast} component={Cast} />
+          <Route path={routes.reviews} component={Reviews} />
+        </Suspense>
       </>
     );
   }
 }
 
-export default MoviesDetalisView;
+export default MovieDetailsPage;

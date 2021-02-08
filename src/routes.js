@@ -1,8 +1,9 @@
 const routes = {
   home: "/",
   movie: "/movie",
-  moviesSearch: "/movies?query",
   movieDetalis: "/movie/:movieId",
+  cast: "/movie/:movieId/cast",
+  reviews: "/movie/:movieId/reviews",
 };
 
 export default routes;

@@ -2,9 +2,8 @@ import React, { Component } from "react";
 import Axios from "axios";
 import { Link } from "react-router-dom";
 import "../index.css";
-// import BookList from "../componets/BookList";
 
-export class HomeView extends Component {
+export class HomePage extends Component {
   state = {
     trendingList: [],
   };
@@ -35,4 +34,4 @@ export class HomeView extends Component {
   }
 }
 
-export default HomeView;
+export default HomePage;
