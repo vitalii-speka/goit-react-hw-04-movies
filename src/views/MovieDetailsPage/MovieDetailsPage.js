@@ -71,7 +71,10 @@ export class MovieDetailsPage extends Component {
             />
           )}
 
-          <h1>{`${title}(${release_date})`}</h1>
+          <h1>
+            {title} ({release_date.slice(0, 4)})
+          </h1>
+          {/* <h1>{`${title}(${release_date})`}</h1> */}
           <p>
             <span className={s.textBold}>User score: </span>
             {`${popularity}% `}
