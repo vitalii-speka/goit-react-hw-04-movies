@@ -1,0 +1,9 @@
+.textStyle {
+  font-family: "Trebuchet MS", Verdana, sans-serif;
+  color: black;
+}
+
+.textStyleActive a:visited {
+  text-decoration: none;
+  background-color: transparent;
+}

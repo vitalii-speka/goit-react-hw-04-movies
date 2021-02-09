@@ -12,72 +12,8 @@ code {
     monospace;
 }
 
-.oneBooks {
-  display: flex;
-  justify-content: space-between;
-  margin: 15px;
-}
-
 img {
   display: block;
   max-width: 100%;
   height: auto;
-}
-
-.nav {
-  display: flex;
-  margin-right: 15px;
-}
-
-.nav-link {
-  margin-right: 15px;
-}
-
-/* .HomeView {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: calc(100vh - 80px);
-  background-image: linear-gradient(
-      to right,
-      rgba(0, 0, 0, 0.3),
-      rgba(0, 0, 0, 0.3)
-    ),
-    url("../images/home-bg.webp");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-}
-
-.HomeView-title {
-  color: #fff;
-  font-size: 64px;
-} */
-
-/* HomeView-title:selection {
-  background-color: #fff;
-  color: #212121;
-} */
-
-.BookList {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-
-  display: grid;
-  justify-content: center;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  grid-gap: 24px;
-}
-
-.BookPreview-thumb {
-  height: 300px;
-}
-
-.BookPreview-thumb > img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top;
 }

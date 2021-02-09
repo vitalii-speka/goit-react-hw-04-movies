@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import s from "./Cast.module.css";
+
 export class Cast extends Component {
   state = {
     casts: "",
@@ -12,9 +13,8 @@ export class Cast extends Component {
     const response = await Axios.get(
       `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=66851c2d78ce86a1843cb2ac55e2da92&language=en-US`
     );
-    // console.log(response);
+
     this.setState({ casts: response.data.cast });
-    // console.log(this.state.casts);
   }
 
   async componentDidUpdate(prevProps, prevState) {}
@@ -24,7 +24,7 @@ export class Cast extends Component {
 
     return (
       <>
-        {casts.length > 0 && (
+        {casts.length > 0 ? (
           <ul>
             {casts.map(({ id, name, profile_path, character }) => (
               <li className={s.item} key={id}>
@@ -50,6 +50,8 @@ export class Cast extends Component {
               </li>
             ))}
           </ul>
+        ) : (
+          <p>cast not known </p>
         )}
       </>
     );
@@ -57,16 +59,3 @@ export class Cast extends Component {
 }
 
 export default Cast;
-
-// adult: false;
-// cast_id: 2;
-// character: "Tae-ho";
-// credit_id: "5c616ab5c3a3684fabd5b13b";
-// gender: 2;
-// id: 150698;
-// known_for_department: "Acting";
-// name: "Song Joong-ki";
-// order: 0;
-// original_name: "Song Joong-ki";
-// popularity: 5.685;
-// profile_path: "/3piyvKFLJ9qRAE72ZV80gAiKFCp.jpg";

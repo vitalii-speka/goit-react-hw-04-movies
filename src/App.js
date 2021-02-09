@@ -6,18 +6,22 @@ import routes from "./routes";
 import AppBar from "./componets/AppBar";
 
 const HomePage = lazy(() =>
-  import("./views/HomePage.js" /* webpackChunkName: "home-view" */)
+  import("./views/HomePage/HomePage.js" /* webpackChunkName: "home-view" */)
 );
 const MoviesPage = lazy(() =>
-  import("./views/MoviesPage.js" /* webpackChunkName: "movie-view" */)
+  import(
+    "./views/MoviesPage/MoviesPage.js" /* webpackChunkName: "movie-view" */
+  )
 );
 const MovieDetailsPage = lazy(() =>
   import(
-    "./views/MovieDetailsPage.js" /* webpackChunkName: "movies-details-view" */
+    "./views/MovieDetailsPage/MovieDetailsPage.js" /* webpackChunkName: "movies-details-view" */
   )
 );
 const NotFoundView = lazy(() =>
-  import("./views/NotFaundView.js" /* webpackChunkName: "not-faund-view" */)
+  import(
+    "./views/NotFaundView/NotFaundView.js" /* webpackChunkName: "not-faund-view" */
+  )
 );
 
 const App = () => (
@@ -28,7 +32,6 @@ const App = () => (
         <Route exact path={routes.home} component={HomePage} />
         <Route exact path={routes.movie} component={MoviesPage} />
         <Route path={routes.movieDetalis} component={MovieDetailsPage} />
-        {/* <Redirect to={routes.home} /> */}
         <Route component={NotFoundView} />
       </Switch>
     </Suspense>

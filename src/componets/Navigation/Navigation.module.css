@@ -1,0 +1,16 @@
+.nav {
+  display: flex;
+  margin-right: 15px;
+}
+
+.navLink {
+  margin-right: 15px;
+  color: #000;
+}
+
+.navLinkActive {
+  color: red;
+  font: inherit;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+}

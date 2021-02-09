@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Axios from "axios";
-import { Link } from "react-router-dom";
-import "../index.css";
+import { NavLink } from "react-router-dom";
+import s from "./HomePage.module.css";
 
 export class HomePage extends Component {
   state = {
@@ -25,7 +25,13 @@ export class HomePage extends Component {
         <ul>
           {this.state.trendingList.map(({ id, title }) => (
             <li key={id}>
-              <Link to={`${match.url}movie/${id}`}>{title}</Link>
+              <NavLink
+                to={`${match.url}movie/${id}`}
+                className={s.textStyle}
+                activeClassName={s.textStyleActive}
+              >
+                {title}
+              </NavLink>
             </li>
           ))}
         </ul>

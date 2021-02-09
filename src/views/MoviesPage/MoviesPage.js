@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Axios from "axios";
 
-import MovieList from "../componets/MovieList";
-import Searchbar from "../componets/Searchbar";
-import getQueryPatams from "../utils/getQueryPatams";
+import MovieList from "../../componets/MovieList";
+import Searchbar from "../../componets/Searchbar";
+import getQueryPatams from "../../utils/getQueryPatams";
 
 export class MoviesPage extends Component {
   state = {

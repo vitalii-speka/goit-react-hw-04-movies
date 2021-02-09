@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
 import "../../index.css";
-// import BookPreview from "../BookPreview/BookPreview";
 
 const MovieList = ({ movies, location }) => {
   // console.log(movies);
@@ -23,6 +23,11 @@ const MovieList = ({ movies, location }) => {
       </ul>
     </>
   );
+};
+
+MovieList.propTypes = {
+  id: PropTypes.string,
+  title: PropTypes.string,
 };
 
 export default withRouter(MovieList);

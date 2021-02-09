@@ -1,14 +1,15 @@
 import React, { Component, lazy, Suspense } from "react";
 import { Route } from "react-router-dom";
 import Axios from "axios";
-import routes from "../routes";
+import routes from "../../routes";
 import { NavLink } from "react-router-dom";
+import s from "./MovieDetailsPage.module.css";
 
 const Cast = lazy(() =>
-  import("./Cast/Cast.js" /* webpackChunkName: "cast-view" */)
+  import("../Cast/Cast.js" /* webpackChunkName: "cast-view" */)
 );
 const Reviews = lazy(() =>
-  import("./Reviews/Reviews.js" /* webpackChunkName: "reviews-view" */)
+  import("../Reviews/Reviews.js" /* webpackChunkName: "reviews-view" */)
 );
 
 export class MovieDetailsPage extends Component {
@@ -51,7 +52,7 @@ export class MovieDetailsPage extends Component {
 
     return (
       <>
-        <div className="container-fluid">
+        <div className={s.containerFluid}>
           <button type="button" onClick={this.handleGoBack}>
             Go back
           </button>
@@ -71,14 +72,23 @@ export class MovieDetailsPage extends Component {
           )}
 
           <h1>{`${title}(${release_date})`}</h1>
-          <p>{`User score: ${popularity}% `}</p>
-          <p>Overview {overview}</p>
-          {genres && (
+          <p>
+            <span className={s.textBold}>User score: </span>
+            {`${popularity}% `}
+          </p>
+          <p>
+            <span className={s.textBold}>Overview: </span> {overview}
+          </p>
+          {genres.length > 0 ? (
             <p>
-              Genres:
+              <span className={s.textBold}>Genres: </span>
               {genres.map(({ id, name }) => (
                 <li key={id}>{name}</li>
               ))}
+            </p>
+          ) : (
+            <p>
+              <span className={s.textBold}>Genres: </span> non information
             </p>
           )}
         </div>
@@ -109,7 +119,6 @@ export class MovieDetailsPage extends Component {
             </NavLink>
           </li>
         </ul>
-        {/* <Link to={`${match.url}movie/${id}/cast`}>Cast</Link> */}
         <Suspense fallback={<h1>Load....</h1>}>
           <Route path={routes.cast} component={Cast} />
           <Route path={routes.reviews} component={Reviews} />
