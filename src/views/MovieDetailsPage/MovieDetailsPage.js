@@ -36,7 +36,7 @@ export class MovieDetailsPage extends Component {
 
   handleGoBack = () => {
     const { location, history } = this.props;
-
+    console.log(location.state);
     history.push(location?.state?.from || routes.home);
   };
 
@@ -49,12 +49,17 @@ export class MovieDetailsPage extends Component {
       genres,
       release_date,
     } = this.state;
+    const { location, match } = this.props;
 
     return (
       <>
         <div className={s.containerFluid}>
-          <button type="button" onClick={this.handleGoBack}>
-            Go back
+          <button
+            className={s.button}
+            type="button"
+            onClick={this.handleGoBack}
+          >
+            <span>Go back </span>
           </button>
           {poster_path ? (
             <img
@@ -71,10 +76,10 @@ export class MovieDetailsPage extends Component {
             />
           )}
 
-          <h1>
+          {/* <h1>
             {title} ({release_date.slice(0, 4)})
-          </h1>
-          {/* <h1>{`${title}(${release_date})`}</h1> */}
+          </h1> */}
+          <h1>{`${title}(${release_date})`}</h1>
           <p>
             <span className={s.textBold}>User score: </span>
             {`${popularity}% `}
@@ -104,8 +109,8 @@ export class MovieDetailsPage extends Component {
               exact
               // to={`/movie/:movieId/cast`}
               to={{
-                pathname: `${this.props.match.url}/cast`,
-                state: { from: this.props.location },
+                pathname: `${match.url}/cast`,
+                state: { from: location?.state?.from || routes.home },
               }}
             >
               Cast
@@ -114,8 +119,8 @@ export class MovieDetailsPage extends Component {
           <li>
             <NavLink
               to={{
-                pathname: `${this.props.match.url}/reviews`,
-                state: { from: this.props.location },
+                pathname: `${match.url}/reviews`,
+                state: { from: location?.state?.from || routes.home },
               }}
             >
               Reviews
