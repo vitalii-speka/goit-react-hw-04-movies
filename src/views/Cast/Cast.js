@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import Axios from "axios";
+import * as apiService from "../../api/api-service";
 import s from "./Cast.module.css";
+import { toast } from "react-toastify";
 
 export class Cast extends Component {
   state = {
@@ -10,14 +11,14 @@ export class Cast extends Component {
   async componentDidMount() {
     const { movieId } = this.props.match.params;
 
-    const response = await Axios.get(
-      `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=66851c2d78ce86a1843cb2ac55e2da92&language=en-US`
-    );
+    try {
+      const response = await apiService.showCast(movieId);
 
-    this.setState({ casts: response.data.cast });
+      this.setState({ casts: response.data.cast });
+    } catch (error) {
+      return toast.error(`sorry, ${error.response.data.status_message}`);
+    }
   }
-
-  async componentDidUpdate(prevProps, prevState) {}
 
   render() {
     const { casts } = this.state;
@@ -51,7 +52,7 @@ export class Cast extends Component {
             ))}
           </ul>
         ) : (
-          <p>cast not known </p>
+          <p> Cast not known</p>
         )}
       </>
     );

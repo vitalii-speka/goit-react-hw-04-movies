@@ -1,9 +1,25 @@
-.textStyle {
+.a {
   font-family: "Trebuchet MS", Verdana, sans-serif;
-  color: black;
+  text-decoration: none;
 }
 
-.textStyleActive a:visited {
-  text-decoration: none;
+/* unvisited link */
+a:link {
+  color: red;
+}
+
+/* visited link */
+a:visited {
+  color: black;
   background-color: transparent;
+}
+
+/* mouse over link */
+a:hover {
+  color: rgb(119, 255, 7);
+}
+
+/* selected link */
+a:active {
+  color: blue;
 }

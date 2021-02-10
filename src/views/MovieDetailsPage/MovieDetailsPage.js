@@ -1,9 +1,11 @@
 import React, { Component, lazy, Suspense } from "react";
 import { Route } from "react-router-dom";
-import Axios from "axios";
+import * as apiService from "../../api/api-service";
 import routes from "../../routes";
 import { NavLink } from "react-router-dom";
 import s from "./MovieDetailsPage.module.css";
+import { toast } from "react-toastify";
+import Loader from "react-loader-spinner";
 
 const Cast = lazy(() =>
   import("../Cast/Cast.js" /* webpackChunkName: "cast-view" */)
@@ -14,41 +16,33 @@ const Reviews = lazy(() =>
 
 export class MovieDetailsPage extends Component {
   state = {
-    release_date: null,
-    id: null,
-    imgUrl: null,
-    title: null,
-    popularity: null,
-    poster_path: null,
-    overview: null,
-    genres: [],
+    movie: [],
+    loading: false,
   };
 
   async componentDidMount() {
+    this.setState({ loading: true });
     const { movieId } = this.props.match.params;
 
-    const response = await Axios.get(
-      `https://api.themoviedb.org/3/movie/${movieId}?api_key=66851c2d78ce86a1843cb2ac55e2da92&language=en-US`
-    );
+    try {
+      const response = await apiService.showMovieId(movieId);
 
-    this.setState({ ...response.data });
+      this.setState({ movie: response.data, loading: false });
+    } catch (error) {
+      this.setState({ loading: false });
+      return toast.error(`sorry, ${error.response.data.status_message}`);
+    }
   }
 
   handleGoBack = () => {
     const { location, history } = this.props;
-    console.log(location.state);
+
     history.push(location?.state?.from || routes.home);
   };
 
   render() {
-    const {
-      title,
-      poster_path,
-      overview,
-      popularity,
-      genres,
-      release_date,
-    } = this.state;
+    const { movie, loading } = this.state;
+
     const { location, match } = this.props;
 
     return (
@@ -61,17 +55,22 @@ export class MovieDetailsPage extends Component {
           >
             <span>Go back </span>
           </button>
-          {poster_path ? (
+
+          {loading && (
+            <Loader type="Watch" color="#000" height={450} width={450} />
+          )}
+
+          {movie.poster_path ? (
             <img
-              src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
-              alt={title}
+              src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+              alt={movie.title}
               width={320}
               height={240}
             />
           ) : (
             <img
               src={`http://dummyimage.com/320x240/99cccc/ffffff.gif&text=sorry, the poster is missing`}
-              alt={title}
+              alt={movie.title}
               width={320}
             />
           )}
@@ -79,18 +78,18 @@ export class MovieDetailsPage extends Component {
           {/* <h1>
             {title} ({release_date.slice(0, 4)})
           </h1> */}
-          <h1>{`${title}(${release_date})`}</h1>
+          <h1>{`${movie.title}(${movie.release_date})`}</h1>
           <p>
             <span className={s.textBold}>User score: </span>
-            {`${popularity}% `}
+            {`${movie.popularity}% `}
           </p>
           <p>
-            <span className={s.textBold}>Overview: </span> {overview}
+            <span className={s.textBold}>Overview: </span> {movie.overview}
           </p>
-          {genres.length > 0 ? (
+          {movie.length > 0 ? (
             <p>
               <span className={s.textBold}>Genres: </span>
-              {genres.map(({ id, name }) => (
+              {movie.genres.map(({ id, name }) => (
                 <li key={id}>{name}</li>
               ))}
             </p>
@@ -107,7 +106,6 @@ export class MovieDetailsPage extends Component {
           <li>
             <NavLink
               exact
-              // to={`/movie/:movieId/cast`}
               to={{
                 pathname: `${match.url}/cast`,
                 state: { from: location?.state?.from || routes.home },
