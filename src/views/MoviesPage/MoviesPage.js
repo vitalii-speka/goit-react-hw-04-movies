@@ -15,13 +15,20 @@ export class MoviesPage extends Component {
 
   async componentDidMount() {
     const { query } = getQueryPatams(this.props.location.search);
+
+    console.log(`query  - `, query);
+
     if (query) {
+      console.log(`if query  - `, query);
       try {
         const response = await apiService.showMovieQuery(query);
+        console.log(`response  - `, response);
 
-        this.setState({ movie: response.data, loading: false });
+        this.setState({ movie: response.data.results, loading: false });
+        console.log(`this.state.movie  - `, this.state.movie);
       } catch (error) {
-        return toast.error(`sorry, ${error.response.data.status_message}`);
+        console.log(`error`);
+        // return toast.error(`sorry, ${error.response.data.status_message}`);
       }
     }
   }
@@ -29,15 +36,19 @@ export class MoviesPage extends Component {
   async componentDidUpdate(prevProps, prevState) {
     const { query: prevQuery } = getQueryPatams(prevProps.location.search);
     const { query: nextQuery } = getQueryPatams(this.props.location.search);
+    console.log(`prevQuery  - `, prevQuery);
+    console.log(`nextQuery  - `, nextQuery);
+    console.log(`prevQuery !== nextQuery  - `, prevQuery !== nextQuery);
 
     try {
       if (prevQuery !== nextQuery) {
         const response = await apiService.showMovieQuery(nextQuery);
-        this.setState({ loading: true });
-
+        
         if (response.data.results.length === 0) {
           return toast.info("please, enter your request");
         }
+        this.setState({ loading: true });
+
         this.setState({ movies: response.data.results, loading: false });
         // this.setState({ movies: response.data.results });
       }

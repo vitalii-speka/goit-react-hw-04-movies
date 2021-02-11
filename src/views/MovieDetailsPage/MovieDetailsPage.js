@@ -18,10 +18,12 @@ export class MovieDetailsPage extends Component {
   state = {
     movie: [],
     loading: false,
+    error: "",
   };
 
   async componentDidMount() {
     const { movieId } = this.props.match.params;
+    console.log(movieId);
     this.setState({ loading: true });
 
     try {
@@ -30,6 +32,9 @@ export class MovieDetailsPage extends Component {
       this.setState({ movie: response.data, loading: false });
     } catch (error) {
       this.setState({ loading: false });
+            console.log(error);
+      // this.setState({ error: error });
+
       return toast.error(`sorry, ${error.response.data.status_message}`);
     }
   }
@@ -43,12 +48,13 @@ export class MovieDetailsPage extends Component {
   };
 
   render() {
-    const { movie, loading } = this.state;
+    const { movie, loading, error } = this.state;
 
     const { location, match } = this.props;
 
     return (
       <>
+        {error && <h1>{error}</h1>} 
         <div className={s.containerFluid}>
           <button
             className={s.button}
