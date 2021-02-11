@@ -18,7 +18,6 @@ export class MovieDetailsPage extends Component {
   state = {
     movie: [],
     loading: false,
-    error: null,
   };
 
   async componentDidMount() {
@@ -28,12 +27,9 @@ export class MovieDetailsPage extends Component {
 
     try {
       const response = await apiService.showMovieId(movieId);
-      // console.log(response);
       this.setState({ movie: response.data, loading: false });
     } catch (error) {
       this.setState({ loading: false });
-            // console.log(`error`, error);
-      this.setState({ error: error });
 
       return toast.error(`sorry, ${error.response.data.status_message}`);
     }
@@ -78,11 +74,8 @@ export class MovieDetailsPage extends Component {
               alt={movie.title}
               width={320}
             />
-          )}
-
-          {/* <h1>
-            {title} ({release_date.slice(0, 4)})
-          </h1> */}
+            )}
+          
           <h1>{`${movie.title}(${movie.release_date})`}</h1>
           <p>
             <span className={s.textBold}>User score: </span>
