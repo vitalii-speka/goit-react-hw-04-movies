@@ -27,6 +27,8 @@ export class MoviesPage extends Component {
     const { query: nextQuery } = getQueryPatams(this.props.location.search);
 
     if (prevQuery !== nextQuery) {
+
+       console.log(`if prevQuery  - `, prevQuery);
        console.log(`if nextQuery  - `, nextQuery);
       this.showMovies(nextQuery);
     }
@@ -36,12 +38,16 @@ export class MoviesPage extends Component {
     try {
       this.setState({ loading: true })
       const response = await apiService.showMovieQuery(query)
-      
+      console.log(response.data.results.length);
       if (response.data.results.length === 0) {
+        this.setState({ loading: false });
         return toast.info("please, enter your request");
       }
-
-      this.setState({ movies: response.data.results, loading: false });
+      
+      this.setState({ loading: false });
+        this.setState({ movies: response.data.results });
+      return toast.info("please, enter your request");
+      
     } catch (error) {
       this.setState({ loading: false })
       return toast.error(`sorry, ${error.response.data.status_message}`);
