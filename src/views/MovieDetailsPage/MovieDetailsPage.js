@@ -28,7 +28,7 @@ export class MovieDetailsPage extends Component {
 
     try {
       const response = await apiService.showMovieId(movieId);
-      console.log(response);
+      // console.log(response);
       this.setState({ movie: response.data, loading: false });
     } catch (error) {
       this.setState({ loading: false });
@@ -41,8 +41,6 @@ export class MovieDetailsPage extends Component {
 
   handleGoBack = () => {
     const { location, history } = this.props;
-    console.log(location);
-    console.log(history);
 
     history.push(location?.state?.from || routes.home);
   };

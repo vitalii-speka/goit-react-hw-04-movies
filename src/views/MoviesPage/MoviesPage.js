@@ -15,21 +15,26 @@ export class MoviesPage extends Component {
 
   async componentDidMount() {
     const { query } = getQueryPatams(this.props.location.search);
-
+    
     if (query) {
-      console.log(`if query  - `, query);
+      // console.log(`if query   - `, query);
       this.showMovies(query);
     }
+      // this.showMovies(query);
   }
 
   async componentDidUpdate(prevProps, prevState) {
     const { query: prevQuery } = getQueryPatams(prevProps.location.search);
     const { query: nextQuery } = getQueryPatams(this.props.location.search);
 
-    if (prevQuery !== nextQuery) {
 
-       console.log(`if prevQuery  - `, prevQuery);
-       console.log(`if nextQuery  - `, nextQuery);
+    if (nextQuery === undefined ) {
+      return;
+    }
+    
+    if (prevQuery !== nextQuery) {
+      //  console.log(`if prevQuery  - `, prevQuery);
+      //  console.log(`if nextQuery  - `, nextQuery);
       this.showMovies(nextQuery);
     }
   }
@@ -45,8 +50,7 @@ export class MoviesPage extends Component {
       }
       
       this.setState({ loading: false });
-        this.setState({ movies: response.data.results });
-      return toast.info("please, enter your request");
+      this.setState({ movies: response.data.results });
       
     } catch (error) {
       this.setState({ loading: false })
