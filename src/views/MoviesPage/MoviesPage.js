@@ -16,45 +16,34 @@ export class MoviesPage extends Component {
   async componentDidMount() {
     const { query } = getQueryPatams(this.props.location.search);
 
-    console.log(`query  - `, query);
-
     if (query) {
       console.log(`if query  - `, query);
-      try {
-        const response = await apiService.showMovieQuery(query);
-        console.log(`response  - `, response);
-
-        this.setState({ movies: response.data.results, loading: false });
-        console.log(`this.state.movie  - `, this.state.movie);
-      } catch (error) {
-        console.log(`error`);
-        // return toast.error(`sorry, ${error.response.data.status_message}`);
-      }
+      this.showMovies(query);
     }
   }
 
   async componentDidUpdate(prevProps, prevState) {
-
-    
     const { query: prevQuery } = getQueryPatams(prevProps.location.search);
     const { query: nextQuery } = getQueryPatams(this.props.location.search);
-    console.log(`prevQuery  - `, prevQuery);
-    console.log(`nextQuery  - `, nextQuery);
-    console.log(`prevQuery !== nextQuery  - `, prevQuery !== nextQuery);
 
+    if (prevQuery !== nextQuery) {
+       console.log(`if nextQuery  - `, nextQuery);
+      this.showMovies(nextQuery);
+    }
+  }
+
+   showMovies = async (query) => {
     try {
-      if (prevQuery !== nextQuery) {
-        const response = await apiService.showMovieQuery(nextQuery);
-        
-        if (response.data.results.length === 0) {
-          return toast.info("please, enter your request");
-        }
-        this.setState({ loading: true });
-
-        this.setState({ movies: response.data.results, loading: false });
-        // this.setState({ movies: response.data.results });
+      this.setState({ loading: true })
+      const response = await apiService.showMovieQuery(query)
+      
+      if (response.data.results.length === 0) {
+        return toast.info("please, enter your request");
       }
+
+      this.setState({ movies: response.data.results, loading: false });
     } catch (error) {
+      this.setState({ loading: false })
       return toast.error(`sorry, ${error.response.data.status_message}`);
     }
   }
