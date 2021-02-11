@@ -21,8 +21,8 @@ export class MovieDetailsPage extends Component {
   };
 
   async componentDidMount() {
-    this.setState({ loading: true });
     const { movieId } = this.props.match.params;
+    this.setState({ loading: true });
 
     try {
       const response = await apiService.showMovieId(movieId);
@@ -36,6 +36,8 @@ export class MovieDetailsPage extends Component {
 
   handleGoBack = () => {
     const { location, history } = this.props;
+    console.log(location);
+    console.log(history);
 
     history.push(location?.state?.from || routes.home);
   };

@@ -32,8 +32,8 @@ export class MoviesPage extends Component {
 
     try {
       if (prevQuery !== nextQuery) {
-        this.setState({ loading: true });
         const response = await apiService.showMovieQuery(nextQuery);
+        this.setState({ loading: true });
 
         if (response.data.results.length === 0) {
           return toast.info("please, enter your request");
