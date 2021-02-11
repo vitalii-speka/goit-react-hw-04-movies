@@ -18,22 +18,22 @@ export class MovieDetailsPage extends Component {
   state = {
     movie: [],
     loading: false,
-    error: "",
+    error: null,
   };
 
   async componentDidMount() {
     const { movieId } = this.props.match.params;
-    console.log(movieId);
+
     this.setState({ loading: true });
 
     try {
       const response = await apiService.showMovieId(movieId);
-
+      console.log(response);
       this.setState({ movie: response.data, loading: false });
     } catch (error) {
       this.setState({ loading: false });
-            console.log(error);
-      // this.setState({ error: error });
+            // console.log(`error`, error);
+      this.setState({ error: error });
 
       return toast.error(`sorry, ${error.response.data.status_message}`);
     }
@@ -48,19 +48,18 @@ export class MovieDetailsPage extends Component {
   };
 
   render() {
-    const { movie, loading, error } = this.state;
+    const { movie, loading } = this.state;
 
     const { location, match } = this.props;
 
     return (
       <>
-        {error && <h1>{error}</h1>} 
         <div className={s.containerFluid}>
           <button
             className={s.button}
             type="button"
             onClick={this.handleGoBack}
-          >
+            >
             <span>Go back </span>
           </button>
 

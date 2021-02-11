@@ -24,7 +24,7 @@ export class MoviesPage extends Component {
         const response = await apiService.showMovieQuery(query);
         console.log(`response  - `, response);
 
-        this.setState({ movie: response.data.results, loading: false });
+        this.setState({ movies: response.data.results, loading: false });
         console.log(`this.state.movie  - `, this.state.movie);
       } catch (error) {
         console.log(`error`);
@@ -34,6 +34,8 @@ export class MoviesPage extends Component {
   }
 
   async componentDidUpdate(prevProps, prevState) {
+
+    
     const { query: prevQuery } = getQueryPatams(prevProps.location.search);
     const { query: nextQuery } = getQueryPatams(this.props.location.search);
     console.log(`prevQuery  - `, prevQuery);
